@@ -6,7 +6,7 @@
 /*   By: scambier <scambier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 16:07:41 by scambier          #+#    #+#             */
-/*   Updated: 2024/02/06 16:56:42 by scambier         ###   ########.fr       */
+/*   Updated: 2024/02/07 17:06:12 by scambier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,24 +25,26 @@ void	*routine(void *arg)
 	return (0);
 }
 
-int	main(int argc, char **argv)
+void	deploy_philosophers(void *(*routine)(void *), int	count)
 {
 	pthread_t	*philosophers;
-	int			philo_count;
+	int	k;
+
+	philosophers = malloc(sizeof(pthread_t) * count);
+	if (!philosophers)
+		return ;
+	k = -1;
+	while (++k < count)
+		pthread_create(philosophers + k, 0, routine, (void *)0 + k);
+	while (--k >= 0)
+		pthread_join(philosophers[k], 0);
+}
+
+int	main(int argc, char **argv)
+{
 	int			k;
 
 	srand(time(0));
-	philo_count = 10;
-	philosophers = malloc(sizeof(pthread_t) * philo_count);
-	k = -1;
-	while (++k < philo_count)
-	{
-		pthread_create(philosophers + k, 0, routine, (void *)0 + k);
-	}
-	k = -1;
-	while (++k < philo_count)
-	{
-		pthread_join(philosophers[k], 0);
-	}
+	deploy_philosophers(routine, 10);
 	return (0);
 }
