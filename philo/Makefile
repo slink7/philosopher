@@ -1,3 +1,3 @@
 
 all :
-	cc main.c -lpthread
+	cc main.c -lpthread -g3
