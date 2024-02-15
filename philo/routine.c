@@ -6,7 +6,7 @@
 /*   By: scambier <scambier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 14:50:35 by scambier          #+#    #+#             */
-/*   Updated: 2024/02/09 16:59:17 by scambier         ###   ########.fr       */
+/*   Updated: 2024/02/15 16:48:31 by scambier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ int	eat(t_philosopher *philo, pthread_mutex_t *left_fork, pthread_mutex_t *right
 
 	if (get_has_died(philo->table))
 	{
-		pthread_mutex_unlock(right_fork);
 		pthread_mutex_unlock(left_fork);
+		pthread_mutex_unlock(right_fork);
 		return (0);
 	}
 
@@ -39,8 +39,8 @@ int	eat(t_philosopher *philo, pthread_mutex_t *left_fork, pthread_mutex_t *right
 
 	set_last_meal_date(philo, get_ms_ts());
 
-	pthread_mutex_unlock(right_fork);
 	pthread_mutex_unlock(left_fork);
+	pthread_mutex_unlock(right_fork);
 	return (1);
 }
 
@@ -53,7 +53,7 @@ void	*philosophers_routine(void *arg)
 	philo = (t_philosopher *)arg;
 	right_fork = &philo->table->forks[philo->id];
 	left_fork = &philo->table->forks[(philo->id + 1) % philo->table->philo_count];
-	if (philo->id % 2)
+	if (!philo->id % 2)
 	{
 		left_fork = &philo->table->forks[philo->id];
 		right_fork = &philo->table->forks[(philo->id + 1) % philo->table->philo_count];

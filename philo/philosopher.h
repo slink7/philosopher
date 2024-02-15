@@ -6,7 +6,7 @@
 /*   By: scambier <scambier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 14:51:03 by scambier          #+#    #+#             */
-/*   Updated: 2024/02/09 16:51:02 by scambier         ###   ########.fr       */
+/*   Updated: 2024/02/15 16:26:27 by scambier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ typedef struct s_table {
 	unsigned int	start_date;
 	int				time_to_sleep;
 	int				time_to_eat;
-	int				time_to_die;
+	unsigned int	time_to_die;
 	int				philo_count;
 }	t_table;
 

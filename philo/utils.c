@@ -6,7 +6,7 @@
 /*   By: scambier <scambier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 16:20:03 by scambier          #+#    #+#             */
-/*   Updated: 2024/02/09 16:22:20 by scambier         ###   ########.fr       */
+/*   Updated: 2024/02/15 16:25:52 by scambier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	ft_atoi(const char *nptr)
 	return (out * sign);
 }
 
-int	get_ms_ts(void)
+unsigned int	get_ms_ts(void)
 {
 	static struct timeval	tv;
 

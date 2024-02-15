@@ -6,7 +6,7 @@
 /*   By: scambier <scambier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 16:07:41 by scambier          #+#    #+#             */
-/*   Updated: 2024/02/09 17:06:02 by scambier         ###   ########.fr       */
+/*   Updated: 2024/02/15 16:30:39 by scambier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,18 +79,20 @@ void	ft_grim_reaper(t_table *table)
 	unsigned int	current_date;
 	int	k;
 
-	current_date = get_ms_ts();
+	
 	k = -1;
 	while (++k < table->philo_count)
 	{
+		current_date = get_ms_ts();
 		if (current_date - get_last_meal_date(&table->philosophers[k]) >= table->time_to_die)
 		{
 			set_has_died(table, 1);
 			pthread_mutex_lock(&table->log);
-			printf("Philosopher#%d died :'(\n", k);
+			printf("Philosopher#%d(%ums) died :'(\n", k, current_date - get_last_meal_date(&table->philosophers[k]));
 			pthread_mutex_unlock(&table->log);
 			break ;
 		}
+		usleep(1);
 	}
 }
 
