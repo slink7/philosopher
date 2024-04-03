@@ -6,7 +6,7 @@
 /*   By: scambier <scambier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 16:07:41 by scambier          #+#    #+#             */
-/*   Updated: 2024/02/06 16:56:42 by scambier         ###   ########.fr       */
+/*   Updated: 2024/04/03 19:22:20 by scambier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	*routine(void *arg)
 
 	sleept = rand() % 3000000;
 	usleep(sleept);
-	printf("[%4dms]Hello world from thread %d !\n", sleept / 1000, arg);
+	printf("[%4dms]Hello world from thread %ld !\n", sleept / 1000, (long)arg);
 	return (0);
 }
 
@@ -31,6 +31,8 @@ int	main(int argc, char **argv)
 	int			philo_count;
 	int			k;
 
+	(void)argc;
+	(void)argv;
 	srand(time(0));
 	philo_count = 10;
 	philosophers = malloc(sizeof(pthread_t) * philo_count);
