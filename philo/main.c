@@ -6,7 +6,7 @@
 /*   By: scambier <scambier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 16:07:41 by scambier          #+#    #+#             */
-/*   Updated: 2024/04/05 00:37:05 by scambier         ###   ########.fr       */
+/*   Updated: 2024/04/05 00:51:08 by scambier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,21 +56,35 @@ int	read_argv(t_table *table, int argc, char **argv)
 	int	k;
 
 	if (argc < 4 || argc > 5)
+	{
+		ft_printf_fd(2, "Error: wrong number of args\n");
 		return (0);
+	}
 	k = -1;
 	while (++k < argc)
-		table->params[k] = ft_atoi(argv[k]);
+	{
+		if (!ft_atoi_strict(table->params + k, argv[k]))
+		{
+			ft_printf_fd(2, "Error: \"%s\" is invalid\n", argv[k]);
+			return (0);
+		}
+	}
 	return (1);
 }
 
-void	init_philosopher(t_philosopher *philo, t_table *table)
+int	init_philosopher(t_philosopher *philo, t_table *table)
 {
 	static int	counter = 0;
 
 	philo->index = counter++;
 	philo->table = table;
 	ft_memcpy(philo->params_cpy, table->params, sizeof(t_params));
-	pthread_create(&philo->thread, 0, routine, philo);
+	if (pthread_create(&philo->thread, 0, routine, philo))
+	{
+		ft_printf_fd(2, "Error: pthread_create failed\n");
+		return (0);
+	}
+	return (1);
 }
 
 void	wait_for_philosophers(t_table *table)
@@ -83,14 +97,21 @@ void	wait_for_philosophers(t_table *table)
 	free(table->philosophers);
 }
 
-void	summon_philosophers(t_table *table)
+int	summon_philosophers(t_table *table)
 {
 	int	k;
 
 	table->philosophers = ft_calloc(table->params[SIZE], sizeof(t_philosopher));
+	if (!table->philosophers)
+	{
+		ft_printf_fd(2, "Error: malloc failed\n");
+		return (0);
+	}
 	k = -1;
 	while (++k < table->params[SIZE])
-		init_philosopher(table->philosophers + k, table);
+		if (!init_philosopher(table->philosophers + k, table))
+			return (0);
+	return (1);
 }
 
 int	main(int argc, char **argv)
@@ -100,9 +121,9 @@ int	main(int argc, char **argv)
 	(void)argc;
 	(void)argv;
 	ft_bzero(&table, sizeof(t_table));
-	read_argv(&table, argc - 1, argv + 1);
+	if (!read_argv(&table, argc - 1, argv + 1))
+		return (1);
 	summon_philosophers(&table);
 	wait_for_philosophers(&table);
-	
 	return (0);
 }
