@@ -12,12 +12,13 @@ CFLAGS = -Wall -Werror -Wextra -g3
 LFLAGS = -lpthread
 
 LIBS =\
-#	libft/libft.a\
+	libft/libft.a\
 
 
 INCLUDES =\
-	-I./
-#	-Ilibft/
+	-I./\
+	-I./philo\
+	-Ilibft/
 
 OBJ_DIR = obj
 
