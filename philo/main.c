@@ -6,7 +6,7 @@
 /*   By: scambier <scambier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 16:07:41 by scambier          #+#    #+#             */
-/*   Updated: 2024/04/05 00:51:08 by scambier         ###   ########.fr       */
+/*   Updated: 2024/04/06 00:04:26 by scambier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,19 @@
 
 #include "libft.h"
 
+#define SIZE		0
+#define TT_DIE		1
+#define TT_EAT		2
+#define TT_SLEEP	3
+#define NOTEPME		4
+#define PARAMS_SIZE	5
+
+#define PRINTF		0
+#define PUBMUT_SIZE	1
+
 typedef pthread_mutex_t	t_mutex;
 typedef pthread_t		t_thread;
-typedef int				t_params[5];
+typedef int				t_params[PARAMS_SIZE];
 
 typedef struct s_table	t_table;
 typedef struct s_philosopher {
@@ -33,20 +43,18 @@ typedef struct s_table {
 	t_mutex			*forks;
 	t_philosopher	*philosophers;
 	t_params		params;
+	t_mutex			pubmut[PUBMUT_SIZE];
 }	t_table;
 
-#define SIZE 0
-#define TT_DIE 1
-#define TT_EAT 2
-#define TT_SLEEP 3
-#define NOTEPME 4
 
 void	*routine(void *arg)
 {
 	t_philosopher	*philo;
 
 	philo = (t_philosopher *)arg;
-	printf("Cpy :%d %ld\n", philo->index, philo->thread);
+	pthread_mutex_lock(philo->table->pubmut + PRINTF);
+	printf("ABC %d .\n", philo->index);
+	pthread_mutex_unlock(philo->table->pubmut + PRINTF);
 	sleep(1);
 	return (0);
 }
@@ -114,6 +122,28 @@ int	summon_philosophers(t_table *table)
 	return (1);
 }
 
+int	set_table(t_table *table)
+{
+	int	k;
+
+	k = -1;
+	while (++k < PUBMUT_SIZE)
+		if (pthread_mutex_init(table->pubmut + k, 0))
+			return (0);
+	return (1);
+}
+
+int	clear_table(t_table *table)
+{
+	int	k;
+
+	k = -1;
+	while (++k < PUBMUT_SIZE)
+		if (pthread_mutex_destroy(table->pubmut + k))
+			return (0);
+	return (1);
+}
+
 int	main(int argc, char **argv)
 {
 	t_table	table;
@@ -123,7 +153,10 @@ int	main(int argc, char **argv)
 	ft_bzero(&table, sizeof(t_table));
 	if (!read_argv(&table, argc - 1, argv + 1))
 		return (1);
+	if (!set_table(&table))
+		return (1);
 	summon_philosophers(&table);
 	wait_for_philosophers(&table);
+	clear_table(&table);
 	return (0);
 }
