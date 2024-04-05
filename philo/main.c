@@ -130,6 +130,13 @@ int	set_table(t_table *table)
 	while (++k < PUBMUT_SIZE)
 		if (pthread_mutex_init(table->pubmut + k, 0))
 			return (0);
+	table->forks = ft_calloc(table->params[SIZE], sizeof(t_mutex));
+	if (!table->forks)
+		return (0);
+	k = -1;
+	while (++k < table->params[SIZE])
+		if (pthread_mutex_init(table->forks + k, 0))
+			return (0);
 	return (1);
 }
 
@@ -141,6 +148,11 @@ int	clear_table(t_table *table)
 	while (++k < PUBMUT_SIZE)
 		if (pthread_mutex_destroy(table->pubmut + k))
 			return (0);
+	k = -1;
+	while (++k < table->params[SIZE])
+		if (pthread_mutex_destroy(table->forks + k))
+			return (0);
+	free(table->forks);
 	return (1);
 }
 
@@ -148,8 +160,6 @@ int	main(int argc, char **argv)
 {
 	t_table	table;
 
-	(void)argc;
-	(void)argv;
 	ft_bzero(&table, sizeof(t_table));
 	if (!read_argv(&table, argc - 1, argv + 1))
 		return (1);
