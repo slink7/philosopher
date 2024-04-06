@@ -6,12 +6,33 @@
 /*   By: scambier <scambier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 16:07:41 by scambier          #+#    #+#             */
-/*   Updated: 2024/04/06 02:08:02 by scambier         ###   ########.fr       */
+/*   Updated: 2024/04/06 03:26:43 by scambier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "header.h"
+
+static int	read_argv(t_table *table, int argc, char **argv)
+{
+	int	k;
+
+	if (argc < 4 || argc > 5)
+	{
+		ft_printf_fd(2, "Error: wrong number of args\n");
+		return (0);
+	}
+	k = -1;
+	while (++k < argc)
+	{
+		if (!ft_atoi_strict(table->params + k, argv[k]))
+		{
+			ft_printf_fd(2, "Error: \"%s\" is invalid\n", argv[k]);
+			return (0);
+		}
+	}
+	return (1);
+}
 
 int	main(int argc, char **argv)
 {

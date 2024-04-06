@@ -6,24 +6,24 @@
 /*   By: scambier <scambier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 00:12:23 by scambier          #+#    #+#             */
-/*   Updated: 2024/04/06 02:03:42 by scambier         ###   ########.fr       */
+/*   Updated: 2024/04/06 03:27:22 by scambier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef HEADER_H
 # define HEADER_H
 
-#include <pthread.h>
+# include <pthread.h>
 
-#define SIZE		0
-#define TT_DIE		1
-#define TT_EAT		2
-#define TT_SLEEP	3
-#define NOTEPME		4
-#define PARAMS_SIZE	5
+# define SIZE			0
+# define TT_DIE			1
+# define TT_EAT			2
+# define TT_SLEEP		3
+# define NOTEPME		4
+# define PARAMS_SIZE	5
 
-#define PRINTF		0
-#define PUBMUT_SIZE	1
+# define PRINTF			0
+# define PUBMUT_SIZE	1
 
 typedef pthread_mutex_t	t_mutex;
 typedef pthread_t		t_thread;
@@ -48,7 +48,6 @@ typedef struct s_table {
 void	*routine(void *arg);
 
 //setup_clean.c
-int		read_argv(t_table *table, int argc, char **argv);
 int		set_table(t_table *table);
 int		clear_table(t_table *table);
 int		summon_philosophers(t_table *table);
