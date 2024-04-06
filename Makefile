@@ -4,7 +4,9 @@ NAME = philosopher
 NAME_BONUS = bababooey
 
 SRC =\
-	philo/main.c
+	philo/main.c\
+	philo/setup_clean.c\
+	philo/routine.c\
 
 SRC_BONUS =\
 	

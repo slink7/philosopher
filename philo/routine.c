@@ -1,29 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: scambier <scambier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/06 16:07:41 by scambier          #+#    #+#             */
-/*   Updated: 2024/04/06 02:08:02 by scambier         ###   ########.fr       */
+/*   Created: 2024/04/06 01:59:41 by scambier          #+#    #+#             */
+/*   Updated: 2024/04/06 02:05:19 by scambier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <stdio.h>
+#include <unistd.h>
+
 #include "header.h"
 
-int	main(int argc, char **argv)
+void	*routine(void *arg)
 {
-	t_table	table;
+	t_philosopher	*philo;
 
-	ft_bzero(&table, sizeof(t_table));
-	if (!read_argv(&table, argc - 1, argv + 1))
-		return (1);
-	if (!set_table(&table))
-		return (1);
-	summon_philosophers(&table);
-	wait_for_philosophers(&table);
-	clear_table(&table);
+	philo = (t_philosopher *)arg;
+	pthread_mutex_lock(philo->table->pubmut + PRINTF);
+	printf("ABC %d .\n", philo->index);
+	pthread_mutex_unlock(philo->table->pubmut + PRINTF);
+	sleep(1);
 	return (0);
 }
