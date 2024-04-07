@@ -6,7 +6,7 @@
 /*   By: scambier <scambier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 01:58:39 by scambier          #+#    #+#             */
-/*   Updated: 2024/04/06 03:27:15 by scambier         ###   ########.fr       */
+/*   Updated: 2024/04/07 02:40:15 by scambier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static int	init_philosopher(t_philosopher *philo, t_table *table)
 	ft_memcpy(philo->params_cpy, table->params, sizeof(t_params));
 	if (pthread_create(&philo->thread, 0, routine, philo))
 	{
-		ft_printf_fd(2, "Error: pthread_create failed\n");
+		ft_fprintf(2, "Error: pthread_create failed\n");
 		return (0);
 	}
 	return (1);
@@ -71,7 +71,7 @@ int	summon_philosophers(t_table *table)
 	table->philosophers = ft_calloc(table->params[SIZE], sizeof(t_philosopher));
 	if (!table->philosophers)
 	{
-		ft_printf_fd(2, "Error: malloc failed\n");
+		ft_fprintf(2, "Error: malloc failed\n");
 		return (0);
 	}
 	k = -1;

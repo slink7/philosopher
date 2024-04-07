@@ -6,7 +6,7 @@
 /*   By: scambier <scambier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 01:59:41 by scambier          #+#    #+#             */
-/*   Updated: 2024/04/06 03:22:20 by scambier         ###   ########.fr       */
+/*   Updated: 2024/04/07 02:40:57 by scambier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,9 @@
 void	*routine(void *arg)
 {
 	t_philosopher	*philo;
-	char			*temp;
 
 	philo = (t_philosopher *)arg;
-	temp = ft_sprintf("ABC [%d] \t.\n", philo->index);
-	write(1, temp, ft_strlen(temp) + 1);
-	free(temp);
+	ft_printf("ABC [%d] \t.\n", philo->index);
 	sleep(1);
 	return (0);
 }

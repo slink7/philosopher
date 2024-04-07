@@ -6,7 +6,7 @@
 /*   By: scambier <scambier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 16:07:41 by scambier          #+#    #+#             */
-/*   Updated: 2024/04/06 03:26:43 by scambier         ###   ########.fr       */
+/*   Updated: 2024/04/07 02:40:28 by scambier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	read_argv(t_table *table, int argc, char **argv)
 
 	if (argc < 4 || argc > 5)
 	{
-		ft_printf_fd(2, "Error: wrong number of args\n");
+		ft_fprintf(2, "Error: wrong number of args\n");
 		return (0);
 	}
 	k = -1;
@@ -27,7 +27,7 @@ static int	read_argv(t_table *table, int argc, char **argv)
 	{
 		if (!ft_atoi_strict(table->params + k, argv[k]))
 		{
-			ft_printf_fd(2, "Error: \"%s\" is invalid\n", argv[k]);
+			ft_fprintf(2, "Error: \"%s\" is invalid\n", argv[k]);
 			return (0);
 		}
 	}
