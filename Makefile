@@ -7,6 +7,8 @@ SRC =\
 	philo/main.c\
 	philo/setup_clean.c\
 	philo/routine.c\
+	philo/get_ms_ts.c\
+	philo/mutexed_int.c
 
 SRC_BONUS =\
 	

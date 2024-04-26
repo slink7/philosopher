@@ -6,7 +6,7 @@
 /*   By: scambier <scambier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 01:58:39 by scambier          #+#    #+#             */
-/*   Updated: 2024/04/07 02:44:30 by scambier         ###   ########.fr       */
+/*   Updated: 2024/04/26 11:12:03 by scambier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,12 @@ static int	init_philosopher(t_philosopher *philo, t_table *table)
 
 	philo->index = counter++;
 	philo->table = table;
+	philo->last_meal_date.value = 0;
+	pthread_mutex_init(&philo->last_meal_date.mutex, 0);
+	philo->stop.value = 0;
+	pthread_mutex_init(&philo->stop.mutex, 0);
+	philo->has_stopped.value = 0;
+	pthread_mutex_init(&philo->has_stopped.mutex, 0);
 	ft_memcpy(philo->params_cpy, table->params, sizeof(t_params));
 	if (pthread_create(&philo->thread, 0, routine, philo))
 		return (ft_fprintf(2, "Error: pthread_create failed\n") & 0);
@@ -81,6 +87,9 @@ void	wait_for_philosophers(t_table *table)
 
 	k = -1;
 	while (++k < table->params[SIZE])
+	{
+		//ft_printf("Waiting for %d\n", k);
 		pthread_join(table->philosophers[k].thread, 0);
+	}
 	free(table->philosophers);
 }
