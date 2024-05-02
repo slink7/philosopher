@@ -6,7 +6,7 @@
 /*   By: scambier <scambier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 16:07:41 by scambier          #+#    #+#             */
-/*   Updated: 2024/04/26 11:17:10 by scambier         ###   ########.fr       */
+/*   Updated: 2024/05/02 15:32:20 by scambier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	read_argv(t_table *table, int argc, char **argv)
 		return (ft_fprintf(2, "Error: wrong number of args\n") & 0);
 	k = -1;
 	while (++k < argc)
-		if (!ft_atoi_strict(table->params + k, argv[k]))
+		if (!ft_atoi_strict((int *)table->params + k, argv[k]))
 			return (ft_fprintf(2, "Error: \"%s\" is invalid\n", argv[k]) & 0);
 	return (1);
 }
@@ -38,27 +38,26 @@ void	*grim_reaper(void *arg)
 	t_table	*table;
 	int		k;
 	int		flag;
-	unsigned int	ls;
 
 	table = (t_table *)arg;
 	flag = 1;
 	while (flag && !mutint_get(&table->stop))
 	{
 		k = -1;
-		while (++k < table->params[SIZE])
+		while ((unsigned int)++k < table->params[SIZE])
 		{
-			ls = (unsigned int)mutint_get(&table->philosophers[k].last_meal_date);
-			if (get_ms_ts() - ls >= (unsigned int) table->params[TT_DIE] && !mutint_get(&table->philosophers[k].has_stopped)) //TODO iic
+			if (mutint_get(&table->philosophers[k].has_stopped))
 			{
 				mutint_set(&table->philosophers[k].stop, 1);
-				ft_printf("[%d] %d has died (%u, %u)\n", get_age(&table->philosophers[k]), k, get_ms_ts() - ls, (unsigned int) table->params[TT_DIE]);
+				ft_printf("[%d] %d has died(extern)\n", get_age(&table->philosophers[k]), k);
 				flag = 0;
 			}
 			usleep(50000);
 		}
 	}
 	k = -1;
-	while (++k < table->params[SIZE])
+	ft_printf("//pre\n");
+	while ((unsigned int)++k < table->params[SIZE])
 		mutint_set(&table->philosophers[k].stop, 1);
 	ft_printf("//%d %d\n", flag, !mutint_get(&table->stop));
 	return (0);

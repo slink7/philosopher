@@ -6,7 +6,7 @@
 /*   By: scambier <scambier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 00:12:23 by scambier          #+#    #+#             */
-/*   Updated: 2024/04/26 11:02:16 by scambier         ###   ########.fr       */
+/*   Updated: 2024/04/30 16:23:49 by scambier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 
 typedef pthread_mutex_t	t_mutex;
 typedef pthread_t		t_thread;
-typedef int				t_params[PARAMS_SIZE];
+typedef unsigned int	t_params[PARAMS_SIZE];
 
 typedef	struct s_mutexed_int
 {
@@ -39,7 +39,7 @@ typedef struct s_philosopher {
 	t_thread		thread;
 	t_params		params_cpy;
 	int				index;
-	t_mutexed_int	last_meal_date;
+	unsigned int	last_meal_date;
 	t_mutexed_int	stop;
 	t_mutexed_int	has_stopped;
 }	t_philosopher;

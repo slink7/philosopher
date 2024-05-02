@@ -6,7 +6,7 @@
 /*   By: scambier <scambier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 01:58:39 by scambier          #+#    #+#             */
-/*   Updated: 2024/04/26 11:12:03 by scambier         ###   ########.fr       */
+/*   Updated: 2024/04/30 16:20:42 by scambier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,7 @@ static int	init_philosopher(t_philosopher *philo, t_table *table)
 
 	philo->index = counter++;
 	philo->table = table;
-	philo->last_meal_date.value = 0;
-	pthread_mutex_init(&philo->last_meal_date.mutex, 0);
+	philo->last_meal_date = 0;
 	philo->stop.value = 0;
 	pthread_mutex_init(&philo->stop.mutex, 0);
 	philo->has_stopped.value = 0;
