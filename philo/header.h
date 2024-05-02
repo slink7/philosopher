@@ -6,7 +6,7 @@
 /*   By: scambier <scambier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 00:12:23 by scambier          #+#    #+#             */
-/*   Updated: 2024/04/30 16:23:49 by scambier         ###   ########.fr       */
+/*   Updated: 2024/05/02 16:24:47 by scambier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,6 @@ typedef struct s_philosopher {
 	t_params		params_cpy;
 	int				index;
 	unsigned int	last_meal_date;
-	t_mutexed_int	stop;
-	t_mutexed_int	has_stopped;
 }	t_philosopher;
 
 # define PRINTF			0

@@ -6,7 +6,7 @@
 /*   By: scambier <scambier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 16:07:41 by scambier          #+#    #+#             */
-/*   Updated: 2024/05/02 15:32:20 by scambier         ###   ########.fr       */
+/*   Updated: 2024/05/02 16:24:22 by scambier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,38 +28,17 @@ static int	read_argv(t_table *table, int argc, char **argv)
 
 #include "unistd.h"
 
-static unsigned int	get_age(t_philosopher *philo)
-{
-	return (get_ms_ts() - philo->params_cpy[START_DATE]);
-}
+// static unsigned int	get_age(t_philosopher *philo)
+// {
+// 	return (get_ms_ts() - philo->params_cpy[START_DATE]);
+// }
 
 void	*grim_reaper(void *arg)
 {
 	t_table	*table;
-	int		k;
-	int		flag;
 
 	table = (t_table *)arg;
-	flag = 1;
-	while (flag && !mutint_get(&table->stop))
-	{
-		k = -1;
-		while ((unsigned int)++k < table->params[SIZE])
-		{
-			if (mutint_get(&table->philosophers[k].has_stopped))
-			{
-				mutint_set(&table->philosophers[k].stop, 1);
-				ft_printf("[%d] %d has died(extern)\n", get_age(&table->philosophers[k]), k);
-				flag = 0;
-			}
-			usleep(50000);
-		}
-	}
-	k = -1;
-	ft_printf("//pre\n");
-	while ((unsigned int)++k < table->params[SIZE])
-		mutint_set(&table->philosophers[k].stop, 1);
-	ft_printf("//%d %d\n", flag, !mutint_get(&table->stop));
+	(void) table;
 	return (0);
 }
 
