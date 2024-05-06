@@ -6,7 +6,7 @@
 /*   By: scambier <scambier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 16:07:41 by scambier          #+#    #+#             */
-/*   Updated: 2024/05/02 16:24:22 by scambier         ###   ########.fr       */
+/*   Updated: 2024/05/06 20:53:24 by scambier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,39 +26,19 @@ static int	read_argv(t_table *table, int argc, char **argv)
 	return (1);
 }
 
-#include "unistd.h"
-
-// static unsigned int	get_age(t_philosopher *philo)
-// {
-// 	return (get_ms_ts() - philo->params_cpy[START_DATE]);
-// }
-
-void	*grim_reaper(void *arg)
-{
-	t_table	*table;
-
-	table = (t_table *)arg;
-	(void) table;
-	return (0);
-}
-
 int	main(int argc, char **argv)
 {
 	t_table	table;
 
-	ft_memset(&table, 100, sizeof(t_table));
 	if (!read_argv(&table, argc - 1, argv + 1))
 		return (1);
 	if (!set_table(&table))
 		return (1);
 	table.params[START_DATE] = get_ms_ts();
-	table.stop.value = 0;
-	pthread_mutex_init(&table.stop.mutex, 0);
+	mutint_init(&table.stop, 0);
 	summon_philosophers(&table);
-	pthread_create(&table.grim_reaper, 0, grim_reaper, &table);
 	wait_for_philosophers(&table);
-	mutint_set(&table.stop, 1);
-	pthread_join(table.grim_reaper, 0);
 	clear_table(&table);
+	mutint_destroy(&table.stop);
 	return (0);
 }

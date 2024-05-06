@@ -6,7 +6,7 @@
 /*   By: scambier <scambier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 01:58:39 by scambier          #+#    #+#             */
-/*   Updated: 2024/04/30 16:20:42 by scambier         ###   ########.fr       */
+/*   Updated: 2024/05/06 20:53:50 by scambier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,11 @@ int	set_table(t_table *table)
 {
 	int	k;
 
-	k = -1;
-	while (++k < PUBMUT_SIZE)
-		if (pthread_mutex_init(table->pubmut + k, 0))
-			return (0);
 	table->forks = ft_calloc(table->params[SIZE], sizeof(t_mutex));
 	if (!table->forks)
 		return (0);
 	k = -1;
-	while (++k < table->params[SIZE])
+	while ((unsigned int)++k < table->params[SIZE])
 		if (pthread_mutex_init(table->forks + k, 0))
 			return (0);
 	return (1);
@@ -38,11 +34,7 @@ int	clear_table(t_table *table)
 	int	k;
 
 	k = -1;
-	while (++k < PUBMUT_SIZE)
-		if (pthread_mutex_destroy(table->pubmut + k))
-			return (0);
-	k = -1;
-	while (++k < table->params[SIZE])
+	while ((unsigned int)++k < table->params[SIZE])
 		if (pthread_mutex_destroy(table->forks + k))
 			return (0);
 	free(table->forks);
@@ -55,11 +47,6 @@ static int	init_philosopher(t_philosopher *philo, t_table *table)
 
 	philo->index = counter++;
 	philo->table = table;
-	philo->last_meal_date = 0;
-	philo->stop.value = 0;
-	pthread_mutex_init(&philo->stop.mutex, 0);
-	philo->has_stopped.value = 0;
-	pthread_mutex_init(&philo->has_stopped.mutex, 0);
 	ft_memcpy(philo->params_cpy, table->params, sizeof(t_params));
 	if (pthread_create(&philo->thread, 0, routine, philo))
 		return (ft_fprintf(2, "Error: pthread_create failed\n") & 0);
@@ -74,7 +61,7 @@ int	summon_philosophers(t_table *table)
 	if (!table->philosophers)
 		return (ft_fprintf(2, "Error: malloc failed\n") & 0);
 	k = -1;
-	while (++k < table->params[SIZE])
+	while ((unsigned int)++k < table->params[SIZE])
 		if (!init_philosopher(table->philosophers + k, table))
 			return (0);
 	return (1);
@@ -85,10 +72,7 @@ void	wait_for_philosophers(t_table *table)
 	int	k;
 
 	k = -1;
-	while (++k < table->params[SIZE])
-	{
-		//ft_printf("Waiting for %d\n", k);
+	while ((unsigned int)++k < table->params[SIZE])
 		pthread_join(table->philosophers[k].thread, 0);
-	}
 	free(table->philosophers);
 }

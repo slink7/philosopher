@@ -6,7 +6,7 @@
 /*   By: scambier <scambier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 00:12:23 by scambier          #+#    #+#             */
-/*   Updated: 2024/05/02 16:24:47 by scambier         ###   ########.fr       */
+/*   Updated: 2024/05/06 20:53:10 by scambier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,51 +23,47 @@
 # define START_DATE		5
 # define PARAMS_SIZE	6
 
+typedef unsigned int	t_params[6];
 typedef pthread_mutex_t	t_mutex;
 typedef pthread_t		t_thread;
-typedef unsigned int	t_params[PARAMS_SIZE];
 
-typedef	struct s_mutexed_int
-{
+typedef struct s_mutexed_int {
 	t_mutex	mutex;
 	int		value;
 }	t_mutexed_int;
 
-typedef struct s_table	t_table;
 typedef struct s_philosopher {
 	struct s_table	*table;
 	t_thread		thread;
 	t_params		params_cpy;
 	int				index;
-	unsigned int	last_meal_date;
+	unsigned int	last_meal;
 }	t_philosopher;
-
-# define PRINTF			0
-# define PUBMUT_SIZE	1
 
 typedef struct s_table {
 	t_philosopher	*philosophers;
 	t_params		params;
 	t_mutex			*forks;
-	t_mutex			pubmut[PUBMUT_SIZE];
 	t_thread		grim_reaper;
 	t_mutexed_int	stop;
 }	t_table;
 
 //routine.c
-void	*routine(void *arg);
+void			*routine(void *arg);
 
 //setup_clean.c
-int		set_table(t_table *table);
-int		clear_table(t_table *table);
-int		summon_philosophers(t_table *table);
-void	wait_for_philosophers(t_table *table);
+int				set_table(t_table *table);
+int				clear_table(t_table *table);
+int				summon_philosophers(t_table *table);
+void			wait_for_philosophers(t_table *table);
 
 //get_ms_ts.c
 unsigned int	get_ms_ts(void);
 
 //mutexed_int.c
-int		mutint_get(t_mutexed_int *mutint);
-void	mutint_set(t_mutexed_int *mutint, int value);
+void			mutint_init(t_mutexed_int *mutint, unsigned int val);
+void			mutint_destroy(t_mutexed_int *mutint);
+unsigned int	mutint_get(t_mutexed_int *mutint);
+void			mutint_set(t_mutexed_int *mutint, unsigned int value);
 
 #endif
