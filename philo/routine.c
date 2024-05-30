@@ -84,7 +84,6 @@ void	*routine(void *arg)
 
 	ate_count = 0;
 	philo = (t_philosopher *)arg;
-	philo->last_meal = get_ms_ts();
 	fork_a = &philo->table->forks[philo->index];
 	fork_b = &philo->table->forks[(philo->index + 1) % philo->params_cpy[SIZE]];
 	if (philo->index % 2 == 0 && (usleep(philo->params_cpy[TT_EAT] / 2) || 1))
@@ -98,7 +97,11 @@ void	*routine(void *arg)
 		if (check_death(philo, philo->params_cpy[TT_SLEEP]))
 			break ;
 		usleep(philo->params_cpy[TT_SLEEP] * 1000);
-		ft_printf("%u %d is thinking\n", get_age(philo), philo->index);
+		if (check_death(philo, philo->params_cpy[TT_SLEEP]))
+			break ;
+		ft_printf("%u %d is thinking\n", get_age(philo), philo->index + 1);
 	}
 	return (0);
 }
+
+// gere si 1 philo 
