@@ -6,7 +6,7 @@
 /*   By: scambier <scambier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 01:59:41 by scambier          #+#    #+#             */
-/*   Updated: 2024/05/30 13:55:10 by scambier         ###   ########.fr       */
+/*   Updated: 2024/05/30 14:37:40 by scambier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,6 @@
 
 #include "libft.h"
 #include "header.h"
-
-static unsigned int	get_age(t_philosopher *philo)
-{
-	return (get_ms_ts() - philo->params_cpy[START_DATE]);
-}
 
 int	check_death(t_philosopher *philo, int ahead)
 {
@@ -75,18 +70,26 @@ int	eat(t_philosopher *philo, t_mutex *fork_a, t_mutex *fork_b)
 	return (1);
 }
 
-void	*routine(void *arg)
+void	*handle_solo(t_philosopher *philo)
 {
-	t_philosopher	*philo;
+	ft_printf("%u %d has taken a fork\n", get_age(philo), philo->index + 1);
+	usleep(philo->params_cpy[TT_DIE] * 1000);
+	ft_printf("%u %d died\n", get_age(philo), philo->index + 1);
+	return (0);
+}
+
+void	*routine(t_philosopher	*philo)
+{
 	t_mutex			*fork_a;
 	t_mutex			*fork_b;
 	unsigned int	ate_count;
 
 	ate_count = 0;
-	philo = (t_philosopher *)arg;
 	fork_a = &philo->table->forks[philo->index];
 	fork_b = &philo->table->forks[(philo->index + 1) % philo->params_cpy[SIZE]];
-	if (philo->index % 2 == 0 && (usleep(philo->params_cpy[TT_EAT] / 2) || 1))
+	if (philo->params_cpy[SIZE] == 1)
+		return (handle_solo(philo));
+	if (philo->index % 2 == 1 && (usleep(philo->params_cpy[TT_EAT] * 500) || 1))
 		ft_swap((void **)&fork_a, (void **)&fork_b);
 	while (1)
 	{

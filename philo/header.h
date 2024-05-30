@@ -6,7 +6,7 @@
 /*   By: scambier <scambier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 00:12:23 by scambier          #+#    #+#             */
-/*   Updated: 2024/05/06 20:53:10 by scambier         ###   ########.fr       */
+/*   Updated: 2024/05/30 14:31:22 by scambier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ typedef struct s_table {
 }	t_table;
 
 //routine.c
-void			*routine(void *arg);
+void			*routine(t_philosopher	*philo);
 
 //setup_clean.c
 int				set_table(t_table *table);
@@ -59,6 +59,7 @@ void			wait_for_philosophers(t_table *table);
 
 //get_ms_ts.c
 unsigned int	get_ms_ts(void);
+unsigned int	get_age(t_philosopher *philo);
 
 //mutexed_int.c
 void			mutint_init(t_mutexed_int *mutint, unsigned int val);
