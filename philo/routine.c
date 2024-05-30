@@ -6,7 +6,7 @@
 /*   By: scambier <scambier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 01:59:41 by scambier          #+#    #+#             */
-/*   Updated: 2024/05/06 21:16:56 by scambier         ###   ########.fr       */
+/*   Updated: 2024/05/30 13:53:12 by scambier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	check_death(t_philosopher *philo, int ahead)
 		if (!mutint_get(&philo->table->stop))
 		{
 			mutint_set(&philo->table->stop, 1);
-			ft_printf("%d %d died\n", get_age(philo), philo->index);
+			ft_printf("%d %d died\n", get_age(philo), philo->index + 1);
 		}
 	}
 	return (1);
@@ -59,7 +59,7 @@ int	eat(t_philosopher *philo, t_mutex *fork_a, t_mutex *fork_b)
 		pthread_mutex_unlock(fork_a);
 		return (0);
 	}
-	ft_printf("%u %d has taken a fork\n", get_age(philo), philo->index);
+	ft_printf("%u %d has taken a fork\n", get_age(philo), philo->index + 1);
 	pthread_mutex_lock(fork_b);
 	if (check_death(philo, 0))
 	{
@@ -67,7 +67,7 @@ int	eat(t_philosopher *philo, t_mutex *fork_a, t_mutex *fork_b)
 		pthread_mutex_unlock(fork_b);
 		return (0);
 	}
-	ft_printf("%u %d is eating\n", get_age(philo), philo->index);
+	ft_printf("%u %d is eating\n", get_age(philo), philo->index + 1);
 	philo->last_meal = get_ms_ts() + philo->params_cpy[TT_EAT];
 	usleep(philo->params_cpy[TT_EAT] * 1000);
 	pthread_mutex_unlock(fork_b);
@@ -87,14 +87,14 @@ void	*routine(void *arg)
 	philo->last_meal = get_ms_ts();
 	fork_a = &philo->table->forks[philo->index];
 	fork_b = &philo->table->forks[(philo->index + 1) % philo->params_cpy[SIZE]];
-	if (philo->index % 2 == 0)
+	if (philo->index % 2 == 0 && (usleep(philo->params_cpy[TT_EAT] / 2) || 1))
 		ft_swap((void **)&fork_a, (void **)&fork_b);
 	while (1)
 	{
 		if (!eat(philo, fork_a, fork_b) || (philo->params_cpy[NOTEPME] > 0
 				&& ++ate_count >= philo->params_cpy[NOTEPME]))
 			break ;
-		ft_printf("%u %d is sleeping\n", get_age(philo), philo->index);
+		ft_printf("%u %d is sleeping\n", get_age(philo), philo->index + 1);
 		if (check_death(philo, philo->params_cpy[TT_SLEEP]))
 			break ;
 		usleep(philo->params_cpy[TT_SLEEP] * 1000);
