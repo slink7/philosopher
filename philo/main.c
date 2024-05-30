@@ -6,7 +6,7 @@
 /*   By: scambier <scambier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 16:07:41 by scambier          #+#    #+#             */
-/*   Updated: 2024/05/06 20:53:24 by scambier         ###   ########.fr       */
+/*   Updated: 2024/05/30 13:50:45 by scambier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	main(int argc, char **argv)
 {
 	t_table	table;
 
+	ft_memset(&table, 0, sizeof(table));
 	if (!read_argv(&table, argc - 1, argv + 1))
 		return (1);
 	if (!set_table(&table))
