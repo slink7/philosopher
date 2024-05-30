@@ -6,7 +6,7 @@
 /*   By: scambier <scambier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 01:59:41 by scambier          #+#    #+#             */
-/*   Updated: 2024/05/30 13:53:12 by scambier         ###   ########.fr       */
+/*   Updated: 2024/05/30 13:55:10 by scambier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,5 +103,3 @@ void	*routine(void *arg)
 	}
 	return (0);
 }
-
-// gere si 1 philo 
