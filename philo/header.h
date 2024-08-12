@@ -6,7 +6,7 @@
 /*   By: scambier <scambier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 10:49:20 by scambier          #+#    #+#             */
-/*   Updated: 2024/08/12 12:30:28 by scambier         ###   ########.fr       */
+/*   Updated: 2024/08/12 14:01:57 by scambier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ typedef struct s_table {
 
 //get_ms_ts.c
 unsigned int	get_ms_ts(void);
+unsigned int	get_age(t_philosopher *philo);
 
 //mint.c
 void	mint_init(t_mint *mint, int value);

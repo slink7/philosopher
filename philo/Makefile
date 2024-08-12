@@ -6,7 +6,8 @@ SRC =\
 	main.c\
 	mint.c\
 	get_ms_ts.c\
-	setup_clean.c
+	setup_clean.c\
+	routine.c
 	
 CFLAGS = -Wall -Werror -Wextra -g3
 LFLAGS = -lpthread

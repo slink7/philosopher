@@ -6,11 +6,12 @@
 /*   By: scambier <scambier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 11:54:48 by scambier          #+#    #+#             */
-/*   Updated: 2024/08/12 12:54:24 by scambier         ###   ########.fr       */
+/*   Updated: 2024/08/12 14:20:10 by scambier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
+#include <unistd.h>
 
 #include "libft.h"
 
@@ -42,11 +43,7 @@ int	clear_table(t_table *table)
 	return (1);
 }
 
-void *routine(t_philosopher *philo)
-{
-	ft_printf("Hello from %d!\n", philo->id);
-	return (0);
-}
+
 
 void	init_philosopher(t_table *table, t_philosopher *philo)
 {
@@ -68,7 +65,7 @@ void	summon_philosophers(t_table *table)
 	table->philosophers = ft_calloc(table->params[COUNT], sizeof(t_philosopher));
 	k = -1;
 	while (++k < (int)table->params[COUNT])
-		init_philosopher(table, table->philosophers + k);	
+		init_philosopher(table, table->philosophers + k);
 }
 
 void	wait_for_philosophers(t_table *table)
