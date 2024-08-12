@@ -6,7 +6,7 @@
 /*   By: scambier <scambier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 11:54:48 by scambier          #+#    #+#             */
-/*   Updated: 2024/08/12 12:33:40 by scambier         ###   ########.fr       */
+/*   Updated: 2024/08/12 12:54:24 by scambier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int	clear_table(t_table *table)
 	while (++k < (int)table->params[COUNT])
 		if (pthread_mutex_destroy(table->forks + k))
 			return (0);
+	free(table->forks);
 	return (1);
 }
 
