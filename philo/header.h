@@ -6,7 +6,7 @@
 /*   By: scambier <scambier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 10:49:20 by scambier          #+#    #+#             */
-/*   Updated: 2024/08/12 14:01:57 by scambier         ###   ########.fr       */
+/*   Updated: 2024/08/14 17:38:01 by scambier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ typedef struct s_philosopher {
 	t_mint			stop;
 }	t_philosopher;
 
-
 typedef struct s_table {
 	t_philosopher	*philosophers;
 	t_params		params;
@@ -55,16 +54,17 @@ unsigned int	get_ms_ts(void);
 unsigned int	get_age(t_philosopher *philo);
 
 //mint.c
-void	mint_init(t_mint *mint, int value);
-void	mint_destroy(t_mint *mint);
-void	mint_set(t_mint *mint, int value);
-int		mint_get(t_mint *mint);
+void			mint_init(t_mint *mint, int value);
+void			mint_destroy(t_mint *mint);
+void			mint_set(t_mint *mint, int value);
+int				mint_get(t_mint *mint);
 
 //setup_clean.c
-int		set_table(t_table *table);
-int		clear_table(t_table *table);
-void	*routine(t_philosopher *philo);
-void	init_philosopher(t_table *table, t_philosopher *philo);
-void	summon_philosophers(t_table *table);
-void	wait_for_philosophers(t_table *table);
+int				set_table(t_table *table);
+int				clear_table(t_table *table);
+void			*routine(t_philosopher *philo);
+void			*egoists_routine(t_philosopher *philo);
+void			init_philosopher(t_table *table, t_philosopher *philo);
+void			summon_philosophers(t_table *table);
+void			wait_for_philosophers(t_table *table);
 #endif

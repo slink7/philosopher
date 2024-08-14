@@ -6,7 +6,7 @@
 /*   By: scambier <scambier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 14:14:09 by scambier          #+#    #+#             */
-/*   Updated: 2024/08/14 16:49:23 by scambier         ###   ########.fr       */
+/*   Updated: 2024/08/14 17:29:58 by scambier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,5 +64,14 @@ void *routine(t_philosopher *philo)
 		ft_printf("%d %d is sleeping\n", get_age(philo), philo->id);
 		usleep(philo->params_cpy[TT_SLEEP] * 1000);
 	}
+	return (0);
+}
+
+void	*egoists_routine(t_philosopher *philo)
+{
+	ft_printf("%d %d is thinking\n", get_age(philo), philo->id);
+	ft_printf("%d %d has taken a fork\n", get_age(philo), philo->id);
+	while (!mint_get(&philo->stop))
+		usleep(50000);
 	return (0);
 }

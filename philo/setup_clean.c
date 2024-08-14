@@ -6,7 +6,7 @@
 /*   By: scambier <scambier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 11:54:48 by scambier          #+#    #+#             */
-/*   Updated: 2024/08/14 17:19:53 by scambier         ###   ########.fr       */
+/*   Updated: 2024/08/14 17:30:18 by scambier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,10 @@ void	init_philosopher(t_table *table, t_philosopher *philo)
 	mint_init(&philo->stop, 0);
 	mint_init(&philo->last_meal, get_ms_ts());
 	ft_memcpy(philo->params_cpy, table->params, sizeof(t_params));
-	if (pthread_create(&philo->thread, 0, (void *(*)(void *)) routine, philo))
-		return ;
+	if (table->params[COUNT] != 1)
+		pthread_create(&philo->thread, 0, (void *(*)(void *)) routine, philo);
+	else
+		pthread_create(&philo->thread, 0, (void *(*)(void *)) egoists_routine, philo);
 }
 
 void	summon_philosophers(t_table *table)
