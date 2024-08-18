@@ -6,7 +6,7 @@
 /*   By: scambier <scambier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 16:07:41 by scambier          #+#    #+#             */
-/*   Updated: 2024/08/14 16:48:02 by scambier         ###   ########.fr       */
+/*   Updated: 2024/08/18 14:57:11 by scambier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 
 #include "libft.h"
 #include "header.h"
-
 
 static int	read_argv(t_table *table, int argc, char **argv)
 {
@@ -30,25 +29,41 @@ static int	read_argv(t_table *table, int argc, char **argv)
 	while (++k < argc)
 		if (!ft_atoi_strict((int *)table->params + k, argv[k]))
 			return (ft_fprintf(2, "Error: \"%s\" is invalid\n", argv[k]) & 0);
+	if (table->params[COUNT] < 1)
+		return (0 & ft_fprintf(2, "Error: too few philosophers\n"));
+	if (table->params[COUNT] > 200)
+		return (0 & ft_fprintf(2, "Error: too many philosophers\n"));
+	k = 0;
+	while (++k < 4)
+	{
+		if ((int)table->params[k] < 60)
+			return (0 & ft_fprintf(2, "Error: arg \"%s\" < 60\n", argv[k]));
+	}
+	if ((int)table->params[NOTEPME] < 0)
+		return (0 & ft_fprintf(2, "Error: arg \"%s\" < 0\n", argv[4]));
 	return (1);
 }
 
 int	is_dead(t_philosopher *philo)
 {
-	return (get_ms_ts() - mint_get(&philo->last_meal) > philo->table->params[TT_DIE]);
+	return (get_ms_ts() - mint_get(&philo->last_meal)
+		> philo->table->params[TT_DIE]);
 }
-void	*grim_reaper(t_table *table)
+
+void	*grim_reaper(void *arg)
 {
 	t_philosopher	*philo;
+	t_table			*table;
 	int				k;
 
+	table = (t_table *)arg;
 	k = 0;
 	while (1)
 	{
 		philo = table->philosophers + (k++ % table->params[COUNT]);
 		if (is_dead(philo))
 		{
-			ft_printf("%d %d died\n", get_age(philo), philo->id, get_ms_ts() - mint_get(&philo->last_meal));
+			ft_printf("%d %d died\n", get_age(philo), philo->id);
 			break ;
 		}
 	}
@@ -69,9 +84,7 @@ int	main(int argc, char **argv)
 		return (1);
 	table.start = get_ms_ts();
 	summon_philosophers(&table);
-
-	pthread_create(&table.grim_reaper, 0, (void *(*)(void *))grim_reaper, &table);
-
+	pthread_create(&table.grim_reaper, 0, grim_reaper, &table);
 	wait_for_philosophers(&table);
 	pthread_detach(table.grim_reaper);
 	clear_table(&table);

@@ -6,7 +6,7 @@
 /*   By: scambier <scambier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 11:54:48 by scambier          #+#    #+#             */
-/*   Updated: 2024/08/14 17:30:18 by scambier         ###   ########.fr       */
+/*   Updated: 2024/08/18 14:56:41 by scambier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,6 @@ int	clear_table(t_table *table)
 	return (1);
 }
 
-
-
 void	init_philosopher(t_table *table, t_philosopher *philo)
 {
 	static int	counter = 0;
@@ -56,14 +54,14 @@ void	init_philosopher(t_table *table, t_philosopher *philo)
 	if (table->params[COUNT] != 1)
 		pthread_create(&philo->thread, 0, (void *(*)(void *)) routine, philo);
 	else
-		pthread_create(&philo->thread, 0, (void *(*)(void *)) egoists_routine, philo);
+		pthread_create(&philo->thread, 0, egoists_routine, philo);
 }
 
 void	summon_philosophers(t_table *table)
 {
 	int	k;
 
-	table->philosophers = ft_calloc(table->params[COUNT], sizeof(t_philosopher));
+	table->philosophers = ft_calloc(table->params[COUNT], SIZEOF_PHILO);
 	k = -1;
 	while (++k < (int)table->params[COUNT])
 		init_philosopher(table, table->philosophers + k);

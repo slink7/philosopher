@@ -6,7 +6,7 @@
 /*   By: scambier <scambier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 10:49:20 by scambier          #+#    #+#             */
-/*   Updated: 2024/08/14 17:38:01 by scambier         ###   ########.fr       */
+/*   Updated: 2024/08/18 14:59:15 by scambier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct s_philosopher {
 	t_mint			last_meal;
 	t_mint			stop;
 }	t_philosopher;
+# define SIZEOF_PHILO 144UL
 
 typedef struct s_table {
 	t_philosopher	*philosophers;
@@ -63,7 +64,7 @@ int				mint_get(t_mint *mint);
 int				set_table(t_table *table);
 int				clear_table(t_table *table);
 void			*routine(t_philosopher *philo);
-void			*egoists_routine(t_philosopher *philo);
+void			*egoists_routine(void *philo);
 void			init_philosopher(t_table *table, t_philosopher *philo);
 void			summon_philosophers(t_table *table);
 void			wait_for_philosophers(t_table *table);

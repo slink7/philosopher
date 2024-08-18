@@ -6,7 +6,7 @@
 /*   By: scambier <scambier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 12:00:26 by scambier          #+#    #+#             */
-/*   Updated: 2024/08/12 12:07:23 by scambier         ###   ########.fr       */
+/*   Updated: 2024/08/18 14:57:01 by scambier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,5 @@ unsigned int	get_ms_ts(void)
 
 unsigned int	get_age(t_philosopher *philo)
 {
-	return (get_ms_ts() - philo->table->start); //TODO: ptete a mettre dans t_params
+	return (get_ms_ts() - philo->table->start);
 }
