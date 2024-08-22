@@ -6,7 +6,7 @@
 /*   By: scambier <scambier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 16:07:41 by scambier          #+#    #+#             */
-/*   Updated: 2024/08/22 14:09:22 by scambier         ###   ########.fr       */
+/*   Updated: 2024/08/22 14:42:14 by scambier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	*grim_reaper(void *arg)
 		philo = table->philosophers + (k++ % table->params[COUNT]);
 		if (is_dead(philo))
 		{
-			ft_printf("%d %d died\n", get_age(philo), philo->id);
+			ft_printf("%d %d died\n", get_age(philo), philo->id + 1);
 			break ;
 		}
 	}
