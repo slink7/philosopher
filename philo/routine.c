@@ -6,7 +6,7 @@
 /*   By: scambier <scambier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 14:14:09 by scambier          #+#    #+#             */
-/*   Updated: 2024/08/18 14:59:39 by scambier         ###   ########.fr       */
+/*   Updated: 2024/08/22 14:09:41 by scambier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void	*routine(t_philosopher *philo)
 		ft_printf("%d %d is sleeping\n", get_age(philo), philo->id);
 		usleep(philo->params_cpy[TT_SLEEP] * 1000);
 	}
+	mint_set(&philo->stop, 1);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: scambier <scambier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 16:07:41 by scambier          #+#    #+#             */
-/*   Updated: 2024/08/18 14:57:11 by scambier         ###   ########.fr       */
+/*   Updated: 2024/08/22 14:09:22 by scambier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ static int	read_argv(t_table *table, int argc, char **argv)
 
 int	is_dead(t_philosopher *philo)
 {
-	return (get_ms_ts() - mint_get(&philo->last_meal)
-		> philo->table->params[TT_DIE]);
+	return ((get_ms_ts() - mint_get(&philo->last_meal)
+			> philo->table->params[TT_DIE]) && !mint_get(&philo->stop));
 }
 
 void	*grim_reaper(void *arg)
